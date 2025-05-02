@@ -1,4 +1,3 @@
-
 import json
 
 
@@ -31,9 +30,7 @@ class BookCollection:
         book_author = input("Enter author: ")
         publication_year = input("Enter publication year: ")
         book_genre = input("Enter genre: ")
-        is_book_read = (
-            input("Have you read this book? (yes/no): ").strip().lower() == "yes"
-        )
+        is_book_read = input("Have you read this book? (yes/no): ").strip().lower() == "yes"
 
         new_book = {
             "title": book_title,
@@ -61,22 +58,17 @@ class BookCollection:
 
     def find_book(self):
         """Search for books in the collection by title or author name."""
-        search_type = input("Search by:\n1. Title\n2. Author\nEnter your choice: ")
         search_text = input("Enter search term: ").lower()
         found_books = [
-            book
-            for book in self.book_list
-            if search_text in book["title"].lower()
-            or search_text in book["author"].lower()
+            book for book in self.book_list
+            if search_text in book["title"].lower() or search_text in book["author"].lower()
         ]
 
         if found_books:
             print("Matching Books:")
             for index, book in enumerate(found_books, 1):
                 reading_status = "Read" if book["read"] else "Unread"
-                print(
-                    f"{index}. {book['title']} by {book['author']} ({book['year']}) - {book['genre']} - {reading_status}"
-                )
+                print(f"{index}. {book['title']} by {book['author']} ({book['year']}) - {book['genre']} - {reading_status}")
         else:
             print("No matching books found.\n")
 
@@ -87,15 +79,10 @@ class BookCollection:
             if book["title"].lower() == book_title.lower():
                 print("Leave blank to keep existing value.")
                 book["title"] = input(f"New title ({book['title']}): ") or book["title"]
-                book["author"] = (
-                    input(f"New author ({book['author']}): ") or book["author"]
-                )
+                book["author"] = input(f"New author ({book['author']}): ") or book["author"]
                 book["year"] = input(f"New year ({book['year']}): ") or book["year"]
                 book["genre"] = input(f"New genre ({book['genre']}): ") or book["genre"]
-                book["read"] = (
-                    input("Have you read this book? (yes/no): ").strip().lower()
-                    == "yes"
-                )
+                book["read"] = input("Have you read this book? (yes/no): ").strip().lower() == "yes"
                 self.save_to_file()
                 print("Book updated successfully!\n")
                 return
@@ -110,18 +97,14 @@ class BookCollection:
         print("Your Book Collection:")
         for index, book in enumerate(self.book_list, 1):
             reading_status = "Read" if book["read"] else "Unread"
-            print(
-                f"{index}. {book['title']} by {book['author']} ({book['year']}) - {book['genre']} - {reading_status}"
-            )
+            print(f"{index}. {book['title']} by {book['author']} ({book['year']}) - {book['genre']} - {reading_status}")
         print()
 
     def show_reading_progress(self):
         """Calculate and display statistics about your reading progress."""
         total_books = len(self.book_list)
         completed_books = sum(1 for book in self.book_list if book["read"])
-        completion_rate = (
-            (completed_books / total_books * 100) if total_books > 0 else 0
-        )
+        completion_rate = (completed_books / total_books * 100) if total_books > 0 else 0
         print(f"Total books in collection: {total_books}")
         print(f"Reading progress: {completion_rate:.2f}%\n")
 
